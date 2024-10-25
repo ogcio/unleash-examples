@@ -1,0 +1,17 @@
+{
+  "name": "oidc-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "passport-openidconnect": "^0.1.2",
+    "passport": "^0.7.0",
+    "unleash-server": "^6.3.0"
+  }
+}
