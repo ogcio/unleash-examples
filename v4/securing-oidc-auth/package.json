@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "db:migrate": "node create-db.js",
     "start": "node index"
   },
   "author": "",
@@ -12,6 +13,10 @@
     "dotenv": "^16.4.5",
     "passport-openidconnect": "^0.1.2",
     "passport": "^0.7.0",
+    "pg": "^8.11.3",
     "unleash-server": "^6.3.0"
+  },
+  "engines": {
+    "node": "<21"
   }
 }

@@ -13,10 +13,12 @@ const passport = require("passport");
 
 const { AuthenticationRequired } = require("unleash-server");
 
-const appId = process.env.AUTH_APP_ID;
-const appSecret = process.env.AUTH_APP_SECRET;
-const endpoint = process.env.AUTH_HOST;
-const contextPath = process.env.CONTEXT_PATH || "";
+const { AUTH_APP_ID, AUTH_APP_SECRET, AUTH_HOST, CONTEXT_PATH } = process.env;
+const contextPath = CONTEXT_PATH || "";
+
+if (!AUTH_APP_ID || !AUTH_APP_SECRET || !AUTH_HOST) {
+  throw new Error("Missing required environment variables for OIDC authentication");
+}
 
 function enableOidcOauth(app, config, services) {
   const { baseUriPath } = config.server;
@@ -26,13 +28,13 @@ function enableOidcOauth(app, config, services) {
     "oidc",
     new OpenIDConnectStrategy(
       {
-        issuer: `${endpoint}/oidc`,
-        authorizationURL: `${endpoint}/oidc/auth`,
-        tokenURL: `${endpoint}/oidc/token`,
-        userInfoURL: `${endpoint}/oidc/me`,
+        issuer: `${AUTH_HOST}/oidc`,
+        authorizationURL: `${AUTH_HOST}/oidc/auth`,
+        tokenURL: `${AUTH_HOST}/oidc/token`,
+        userInfoURL: `${AUTH_HOST}/oidc/me`,
         callbackURL: `${contextPath}/api/auth/callback`,
-        clientID: appId,
-        clientSecret: appSecret,
+        clientID: AUTH_APP_ID,
+        clientSecret: AUTH_APP_SECRET,
         scope: ["profile", "offline_access", "email"],
       },
       async (_issuer, profile, callback) => {
